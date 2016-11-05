@@ -15,7 +15,10 @@ const app = choo()
 app.model(require('./model'))
 
 app.router((route) => [
-  route('/', require('./views/speakers'))
+  route('/', require('./views')),
+  route('/speak', require('./views/speakers')),
+  route('/host', require('./views/hosts')),
+  route('/sponsor', require('./views/sponsors'))
 ])
 
 const tree = app.start()

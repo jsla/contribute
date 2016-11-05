@@ -1,9 +1,8 @@
 const html = require('choo/html')
 const dateable = require('dateable')
+const dates = require('../dates')
 
 module.exports = function (state, prev, send) {
-  var dates = getDates()
-
   return html`
     <div>
       <h1 class='f2'>Want to speak at js.la?</h1>
@@ -122,36 +121,3 @@ module.exports = function (state, prev, send) {
     </div>
   `
 }
-
-function getDates (n) {
-  n = n || 5
-  var dates = []
-
-  var invalidMonths = [-1, 10, 11]
-
-  var thisMonth
-  var lastThurs
-  var lastMonth = -1
-  var d = new Date()
-
-  while (dates.length < n) {
-    d = incrementDate(d)
-
-    thisMonth = d.getMonth()
-    var isValidMonth = invalidMonths.indexOf(lastMonth) === -1
-    var isNewMonth = thisMonth !== lastMonth
-
-    if (lastThurs && isValidMonth && isNewMonth) { dates.push(lastThurs) }
-
-    if (d.getDay() === 4) lastThurs = d
-    lastMonth = thisMonth
-  }
-
-  return dates
-}
-
-function incrementDate (d) { return new Date(d.valueOf() + 24 * 3600 * 1000) }
-
-// <p class='f4 lh-copy measure'>
-//   Our group is mostly mid-level to senior developers so don't worry about needing to cater to beginners too much. Code example are welcome, so don't be afraid to get technical (usually this is when the best conversations/ questions come up). Also, since our talks are recorded and posted online, you have more leeway in the skill level you focus on.
-// </p>
