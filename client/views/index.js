@@ -5,6 +5,7 @@ module.exports = function (state, prev, send) {
     <div>
       <h1>Speak</h1>
       <h1>Host</h1>
+      <h1>Sponsor</h1>
     </div>
   `
 }

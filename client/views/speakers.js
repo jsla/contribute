@@ -3,6 +3,8 @@ const dateable = require('dateable')
 const dates = require('../dates')
 
 module.exports = function (state, prev, send) {
+  document.title = 'Come speak at js.la!'
+
   return html`
     <div>
       <h1 class='f2'>Want to speak at js.la?</h1>

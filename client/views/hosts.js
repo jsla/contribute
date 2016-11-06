@@ -3,6 +3,8 @@ const dateable = require('dateable')
 const dates = require('../dates')
 
 module.exports = function (state, prev, send) {
+  document.title = 'Host js.la!'
+
   return html`
     <div>
       <h1 class='f2'>Want to host js.la?</h1>

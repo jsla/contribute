@@ -8,7 +8,7 @@ document.body.setAttribute(
   'pa5 bg-near-white near-black avenir'
 )
 
-document.title = 'Come speak at js.la!'
+document.title = 'js.la - Contribute'
 
 const app = choo()
 
