@@ -1,9 +1,23 @@
 const html = require('choo/html')
-const dateable = require('dateable')
 const dates = require('../dates')
+const map = require('lodash/map')
 
+const formComponents = require('./components/form')
+const textField = formComponents.textField
+const textArea = formComponents.textArea
+const dateSelect = formComponents.dateSelect
+const submitButton = formComponents.submitButton
+
+var fetched = false
 module.exports = function (state, prev, send) {
   document.title = 'Come speak at js.la!'
+
+  var speaker = state.speaker || {}
+
+  if (!fetched) {
+    fetched = true
+    send('fetchSpeaker')
+  }
 
   return html`
     <div>
@@ -57,153 +71,89 @@ module.exports = function (state, prev, send) {
                 key: 'name',
                 label: 'What\'s your name?',
                 placeholder: 'Person Adulthuman',
-                value: ''
+                value: speaker.name
               }, update)}
 
               ${textField({
                 key: 'email',
                 label: 'How can we get in touch with you?',
                 placeholder: 'webmaster@myawesomedomain.com',
-                value: ''
+                value: speaker.email
               }, update)}
 
               ${textArea({
                 key: 'abstract',
                 label: 'What would you like to talk about?',
                 placeholder: 'This all started when I needed to...',
-                value: ''
+                value: speaker.abstract
               }, update)}
 
               ${textField({
                 key: 'title',
                 label: 'If you had to come up with a working title that you could change later, what would it be?',
                 placeholder: 'The Curious Case of the Missing Shadow DOM',
-                value: ''
+                value: speaker.title
               }, update)}
 
               ${textField({
                 key: 'avatar',
                 label: 'What avatar image of you should we use to promote your talk?',
                 placeholder: 'http://twitfacehub.com/path/avatar.jpg',
-                value: ''
+                value: speaker.avatar
               }, update)}
 
               ${textField({
                 key: 'github',
                 label: 'Have a Github?',
                 placeholder: '@githubname',
-                value: ''
+                value: speaker.github
               }, update)}
 
               ${textField({
                 key: 'twitter',
                 label: 'Have a Twitter?',
                 placeholder: '@twittername',
-                value: ''
+                value: speaker.twitter
               }, update)}
 
               ${dateSelect({
                 key: 'dates',
                 label: 'When are you available?',
                 dates: dates,
-                selected: dates.slice(0, 2)
+                selected: speaker.dates
               }, update)}
 
             </fieldset>
 
-            <div class="mt3"><input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" type="submit" value="Let's do this."></div>
+            ${submitButton({
+              key: 'submitState',
+              disabled: !isValid(speaker),
+              undefined: "Let's do this.",
+              done: 'All set!',
+              error: 'Uh oh...',
+              value: speaker.submitState
+            }, update)}
+
           </form>
         </article>
       </div>
     `
   }
 
-  function textField (opts, cb) {
-    return html`
-      <div class="mt3">
-        <label class="db fw4 lh-copy f6" for="${opts.key}">
-          ${opts.label}
-        </label>
-
-        <input
-          class="pa2 input-reset ba bg-transparent w-100 measure"
-          name=${opts.key}
-          placeholder="${opts.placeholder}"
-          type="email"
-          value=${opts.value || ''}
-          onchange=${onchange} >
-      </div>
-    `
-
-    function onchange (evt) { cb(opts.key, evt.target.value) }
-  }
-
-  function textArea (opts, cb) {
-    return html`
-      <div class="mt3">
-        <label class="db fw4 lh-copy f6" for="${opts.key}">
-          ${opts.label}
-        </label>
-
-        <textarea
-          class="pa2 input-reset ba bg-transparent w-100 h5 measure"
-          name="${opts.key}"
-          placeholder="${opts.placeholder}"
-          value="${opts.value}"
-          onchange=${onchange}></textarea>
-      </div>
-    `
-
-    function onchange (evt) { cb(opts.key, evt.target.value) }
-  }
-
-  function dateSelect (opts, cb) {
-    var selected = opts.selected.map((d) => d)
-
-    return html`
-      <div>
-        <div class="mt3">
-          <label class="db fw4 lh-copy f6" for="${opts.key}">
-            ${opts.label}
-          </label>
-        </div>
-
-        ${opts.dates.map(function (date) {
-          return html`
-            <div>
-              <label class="pa0 ma0 lh-copy f6 pointer">
-                <input
-                  type="checkbox"
-                  class='mr1'
-                  checked="${isChecked(date)}"
-                  onchange=${(e) => toggle(date)} />
-                ${dateable(createDate(date), 'dddd, MMMM D')}
-              </label>
-            </div>
-          `
-        })}
-      </div>
-    `
-
-    function toggle (date) {
-      var i = selected.indexOf(date)
-      if (i > -1) {
-        selected.splice(i, 1)
-      } else {
-        selected.push(date)
-      }
-      cb(opts.key, selected)
-    }
-    function isChecked (date) { return selected.indexOf(date) > -1 }
-  }
-
   function update (key, value) {
-    console.log('key', key)
-    console.log('value', value)
+    send('updateSpeaker', {key: key, value: value})
   }
 }
 
-function createDate (str) {
-  var arr = str.split('-').map(parseFloat)
-  return new Date(arr[0], arr[1] - 1, arr[2])
+function isValid (speaker) {
+  if (!speaker.name) return false
+  if (!speaker.email) return false
+  if (!speaker.abstract) return false
+  if (!speaker.title) return false
+  if (!speaker.avatar) return false
+
+  var dates = map(speaker.dates || [], (d) => d)
+  if (!dates.length) return false
+
+  return true
 }

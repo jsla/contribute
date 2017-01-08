@@ -21,7 +21,19 @@ var loginCache = new AsyncCache({
 })
 
 module.exports = {
+  getSpeaker: loginify(getSpeaker),
+  updateSpeaker: loginify(updateSpeaker)
+}
 
+function getSpeaker (cb) {
+  query(createPath('speaker'), cb)
+}
+
+function updateSpeaker (key, value, cb) {
+  var path = createPath('speaker', key)
+  ref.database().ref().child(path).set(value)
+    .catch(cb)
+    .then(() => cb())
 }
 
 function loginify (fn) {
@@ -40,4 +52,18 @@ function signIn (cb) {
 
     cb(null, user.uid)
   })
+}
+
+function createPath (type, key) {
+  var arr = [type, uid]
+  if (key) arr.push(key)
+  return arr.join('/')
+}
+
+function query (key, cb) {
+  ref.database().ref().child(key).once('value')
+    .catch(cb)
+    .then(function (snap) {
+      cb(null, snap.exportVal())
+    })
 }

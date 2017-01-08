@@ -11,11 +11,15 @@
   "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
   "license": "MIT",
   "dependencies": {
+    "async-cache": "^1.1.0",
     "choo": "^3.3.0",
     "dateable": "^1.0.1",
+    "firebase": "^3.6.4",
+    "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
     "sheetify": "^5.1.2",
-    "tachyons": "^4.5.4"
+    "tachyons": "^4.5.4",
+    "xtend": "^4.0.1"
   },
   "devDependencies": {
     "budo": "^9.2.1",
