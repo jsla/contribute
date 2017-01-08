@@ -7,7 +7,7 @@ module.exports = function (state, prev, send) {
 
   return html`
     <div>
-      <h1 class='f2'>Want to support js.la?</h1>
+      <h1 class='f2'>Want to sponsor js.la?</h1>
 
       <h2 class='f1'>Awesome!</h2>
 
@@ -86,7 +86,15 @@ module.exports = function (state, prev, send) {
 
               <div class="mt3">
                 <label class="db fw4 lh-copy f6" for="name">
-                  When would you like to sponsor?
+                  How many months are you interested in sponsoring?
+                </label>
+
+                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="2">
+              </div>
+
+              <div class="mt3">
+                <label class="db fw4 lh-copy f6" for="name">
+                  Which dates are you available to sponsor?
                 </label>
               </div>
 
@@ -94,7 +102,7 @@ module.exports = function (state, prev, send) {
                 return html`
                   <div>
                     <label class="pa0 ma0 lh-copy f6 pointer">
-                      <input type="checkbox" class='mr1'>
+                      <input type="checkbox" class='mr1' checked='true'>
                       ${dateable(date, 'dddd, MMMM D')}
                     </label>
                   </div>
