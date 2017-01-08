@@ -98,6 +98,7 @@ function submitButton (opts, cb) {
 
   if (opts.disabled) {
     style += ' b--gray gray bg-light-gray'
+    text = 'Fill out the form to continue...'
   } else {
     style += ` ${colors} grow pointer`
   }

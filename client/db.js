@@ -22,15 +22,34 @@ var loginCache = new AsyncCache({
 
 module.exports = {
   getSpeaker: loginify(getSpeaker),
-  updateSpeaker: loginify(updateSpeaker)
+  getHost: loginify(getHost),
+  updateSpeaker: loginify(updateSpeaker),
+  updateHost: loginify(updateHost),
+  updateSponsor: loginify(updateSponsor)
 }
 
 function getSpeaker (cb) {
   query(createPath('speaker'), cb)
 }
 
+function getHost (cb) {
+  query(createPath('host'), cb)
+}
+
 function updateSpeaker (key, value, cb) {
-  var path = createPath('speaker', key)
+  update('speaker', key, value, cb)
+}
+
+function updateHost (key, value, cb) {
+  update('host', key, value, cb)
+}
+
+function updateSponsor (key, value, cb) {
+  update('sponsor', key, value, cb)
+}
+
+function update (type, key, value, cb) {
+  var path = createPath(type, key)
   ref.database().ref().child(path).set(value)
     .catch(cb)
     .then(() => cb())
@@ -64,6 +83,6 @@ function query (key, cb) {
   ref.database().ref().child(key).once('value')
     .catch(cb)
     .then(function (snap) {
-      cb(null, snap.exportVal())
+      cb(null, snap.exportVal() || {})
     })
 }

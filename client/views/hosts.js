@@ -1,33 +1,61 @@
 const html = require('choo/html')
-const dateable = require('dateable')
 const dates = require('../dates')
+const map = require('lodash/map')
 
+const formComponents = require('./components/form')
+const textField = formComponents.textField
+const textArea = formComponents.textArea
+const dateSelect = formComponents.dateSelect
+const submitButton = formComponents.submitButton
+
+var fetched
 module.exports = function (state, prev, send) {
   document.title = 'Host js.la!'
 
+  var host = state.host || {}
+
+  if (!fetched) {
+    fetched = true
+    send('fetchHost')
+  }
+
   return html`
     <div>
-      <h1 class='f2'>Want to host js.la?</h1>
+      ${renderIntro()}
 
-      <h2 class='f1'>Awesome!</h2>
+      ${renderForm()}
+    </div>
+  `
 
+  function renderIntro () {
+    return html`
       <div>
-        <h3 class='f3'>Here are some things you should know:</h3>
+        <h1 class='f2'>Want to host js.la?</h1>
 
-        <p class='f4 lh-copy measure'>
-          Leading up to the event we'll promote your organization on our front page, in tweets, on our Meetup.com page, and on our mailing list.
-        </p>
+        <h2 class='f1'>Awesome!</h2>
 
-        <p class='f4 lh-copy measure'>
-          During the event, we'll display your custom slide, and you'll have the opportunity to introduce yourself and your organization to the attendees.
-        </p>
+        <div>
+          <h3 class='f3'>Here are some things you should know:</h3>
 
-        <p class='f4 lh-copy measure'>
-          After the event, we'll feature your logo in videos of that month's talks and in our archive.
-        </p>
+          <p class='f4 lh-copy measure'>
+            Leading up to the event we'll promote your organization on our front page, in tweets, on our Meetup.com page, and on our mailing list.
+          </p>
 
+          <p class='f4 lh-copy measure'>
+            During the event, we'll display your custom slide, and you'll have the opportunity to introduce yourself and your organization to the attendees.
+          </p>
+
+          <p class='f4 lh-copy measure'>
+            After the event, we'll feature your logo in videos of that month's talks and in our archive.
+          </p>
+
+        </div>
       </div>
+    `
+  }
 
+  function renderForm () {
+    return html`
       <div class='mt5'>
         <h4 class='f6'>Now, with that out of the way...</h4>
         <h3 class='f3'>Let's talk about you.</h3>
@@ -36,118 +64,125 @@ module.exports = function (state, prev, send) {
           <form action="sign-up_submit" method="get" accept-charset="utf-8">
             <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  What's your name?
-                </label>
+              ${textField({
+                key: 'name',
+                label: 'What\'s your name?',
+                placeholder: 'Person Adulthuman',
+                value: host.name
+              }, update)}
 
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" name="name" placeholder="Person Adulthuman" type="email">
-              </div>
+              ${textField({
+                key: 'organization',
+                label: 'What\'s the name of your organization?',
+                placeholder: 'Stockmarket Business Co.',
+                value: host.organization
+              }, update)}
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  What's the name of your organization?
-                </label>
+              ${textField({
+                key: 'email',
+                label: 'How can we get in touch with you?',
+                placeholder: 'webmaster@stockmarketbusiness.co',
+                value: host.email
+              }, update)}
 
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" name="name" placeholder="Stockmarket Business Co." type="email">
-              </div>
+              ${textArea({
+                key: 'goal',
+                label: 'We\'d like host because...',
+                placeholder: 'We\'re looking to hire amazing JS engineers and build product awareness.',
+                value: host.goal
+              }, update)}
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  How can we get in touch with you?
-                </label>
+              ${textField({
+                key: 'capacity',
+                label: 'How many attendees could you host?',
+                placeholder: '150',
+                value: host.capacity
+              }, update)}
 
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="webmaster@stockmarketbusiness.co">
-              </div>
+              ${textField({
+                key: 'logo',
+                label: 'What hi-res logo should we use for our site and promotion?',
+                placeholder: 'http://stockmarketbusiness.co/path/logo.png',
+                value: host.logo
+              }, update)}
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="abstract">
-                  We'd like host because...
-                </label>
+              ${textField({
+                key: 'link',
+                label: 'Where should we link to on our website and in promotions?',
+                placeholder: 'http://stockmarketbusiness.co/work-with-us',
+                value: host.link
+              }, update)}
 
-                <textarea class="pa2 input-reset ba bg-transparent w-100 h4 measure" type="abstract" name="abstract" placeholder="We're looking to hire amazing JS engineers and build product awareness."></textarea>
-              </div>
+              ${textField({
+                key: 'refreshments',
+                label: 'What food and drinks will you have available for attendees?',
+                placeholder: 'Pizza and beer',
+                value: host.refreshments
+              }, update)}
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  How many attendees could you host?
-                </label>
+              ${textField({
+                key: 'hasProjector',
+                label: 'Do you have a projector and screen?',
+                placeholder: 'Yes',
+                value: host.hasProjector
+              }, update)}
 
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" name="name" type="email" placeholder="150">
-              </div>
+              ${textField({
+                key: 'hasMicrophone',
+                label: 'Do you have a microphone and PA for the speaker?',
+                placeholder: 'Yes',
+                value: host.hasMicrophone
+              }, update)}
 
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  What hi-res logo should we use for our site and promotion?
-                </label>
-
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" name="name" type="email" placeholder="http://stockmarketbusiness.co/path/logo.png">
-              </div>
-
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  Where should we link to on our website and in promotions?
-                </label>
-
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="http://stockmarketbusiness.co">
-              </div>
-
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  What food and drinks will you have available for attendees?
-                </label>
-
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="Pizza and beer">
-              </div>
-
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  Do you have a projector and screen?
-                </label>
-
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="Yes">
-              </div>
-
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  Do you have a microphone and PA for the speaker?
-                </label>
-
-                <input class="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email" placeholder="Yes">
-              </div>
-
-              <div class="mt3">
-                <label class="db fw4 lh-copy f6" for="name">
-                  When can you host?
-                </label>
-              </div>
-
-              ${dates.map(function (date) {
-                return html`
-                  <div>
-                    <label class="pa0 ma0 lh-copy f6 pointer">
-                      <input type="checkbox" class='mr1'>
-                      ${dateable(date, 'dddd, MMMM D')}
-                    </label>
-                  </div>
-                `
-              })}
+              ${dateSelect({
+                key: 'dates',
+                label: 'When can you host?',
+                dates: dates,
+                selected: host.dates
+              }, update)}
 
             </fieldset>
 
-            <div class="mt3"><input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" type="submit" value="Let's do this."></div>
+            ${submitButton({
+              key: 'submitState',
+              disabled: !isValid(host),
+              undefined: "Let's do this.",
+              done: 'All set!',
+              error: 'Uh oh...',
+              value: host.submitState
+            }, update)}
+
           </form>
         </article>
       </div>
+    `
+  }
 
-
-    </div>
-  `
+  function update (key, value) {
+    send('updateHost', {key: key, value: value})
+  }
 }
-
 
 // - the capacity for at least 100 attendees
 // - food and drink (this can just be 🍕 and 🍺 it's up to y'all)
 // - a PA or some type of quality sound system we can project speakers voice
 // - projector and screen
 // - some type of table/podium for the speaker to present from
+
+function isValid (host) {
+  if (!host.name) return false
+  if (!host.organization) return false
+  if (!host.email) return false
+  if (!host.goal) return false
+  if (!host.capacity) return false
+  if (!host.logo) return false
+  if (!host.link) return false
+  if (!host.refreshments) return false
+  if (!host.hasProjector) return false
+  if (!host.hasMicrophone) return false
+
+  var dates = map(host.dates || [], (d) => d)
+  if (!dates.length) return false
+
+  return true
+}
