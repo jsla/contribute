@@ -17,5 +17,15 @@ module.exports = {
   setHostProperty: function (change, state) {
     state.host[change.key] = change.value
     return state
+  },
+
+  setSponsor: function (sponsor, state) {
+    state.sponsor = sponsor
+    return state
+  },
+
+  setSponsorProperty: function (change, state) {
+    state.sponsor[change.key] = change.value
+    return state
   }
 }

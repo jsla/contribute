@@ -23,6 +23,7 @@ var loginCache = new AsyncCache({
 module.exports = {
   getSpeaker: loginify(getSpeaker),
   getHost: loginify(getHost),
+  getSponsor: loginify(getSponsor),
   updateSpeaker: loginify(updateSpeaker),
   updateHost: loginify(updateHost),
   updateSponsor: loginify(updateSponsor)
@@ -34,6 +35,10 @@ function getSpeaker (cb) {
 
 function getHost (cb) {
   query(createPath('host'), cb)
+}
+
+function getSponsor (cb) {
+  query(createPath('sponsor'), cb)
 }
 
 function updateSpeaker (key, value, cb) {
