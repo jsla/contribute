@@ -1,11 +1,13 @@
 {
-  "name": "admin",
+  "name": "jsla-contribute",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "budo client/index.js --live --pushstate -- -t [ sheetify/transform ]",
-    "test": "standard"
+    "build": "browserify client/index.js -t [ sheetify/transform ] -t es2020 | uglifyjs -mc > dist/index.js",
+    "test": "standard",
+    "deploy": "npm run build && surge dist"
   },
   "keywords": [],
   "author": "David Guttman <david@guttman.io> (http://davidguttman.com/)",
@@ -14,6 +16,7 @@
     "async-cache": "^1.1.0",
     "choo": "^3.3.0",
     "dateable": "^1.0.1",
+    "es2020": "^1.1.9",
     "firebase": "^3.6.4",
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "budo": "^9.2.1",
-    "standard": "^8.5.0"
+    "standard": "^8.5.0",
+    "surge": "^0.18.0"
   }
 }
