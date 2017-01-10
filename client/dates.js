@@ -1,4 +1,4 @@
-module.exports = getDates()
+module.exports = getDates(10)
 
 function getDates (n) {
   n = n || 5
