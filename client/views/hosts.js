@@ -103,7 +103,7 @@ module.exports = function (state, prev, send) {
 
               ${textField({
                 key: 'capacity',
-                label: 'How many attendees could you host?', 
+                label: 'How many attendees could you host?',
                 note: 'Priority given to venues with > 100 person capacity',
                 placeholder: '150',
                 value: host.capacity
@@ -171,7 +171,6 @@ module.exports = function (state, prev, send) {
   function update (key, value) {
     send('updateHost', {key: key, value: value})
   }
-
 }
 
 // - the capacity for at least 100 attendees
