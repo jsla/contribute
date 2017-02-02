@@ -1,6 +1,13 @@
 const html = require('choo/html')
 const dates = require('../dates')
 const map = require('lodash/map')
+const css = require('sheetify')
+const prefix = css`
+  :host em {
+    display: block;
+    font-size: 13px;
+  }
+`
 
 const formComponents = require('./components/form')
 const textField = formComponents.textField
@@ -55,8 +62,10 @@ module.exports = function (state, prev, send) {
   }
 
   function renderForm () {
+    var formClass = `mt5 form ${prefix}`
+
     return html`
-      <div class='mt5'>
+      <div class=${formClass}>
         <h4 class='f6'>Now, with that out of the way...</h4>
         <h3 class='f3'>Let's talk about you.</h3>
 
@@ -94,7 +103,8 @@ module.exports = function (state, prev, send) {
 
               ${textField({
                 key: 'capacity',
-                label: 'How many attendees could you host?',
+                label: 'How many attendees could you host?', 
+                note: 'Priority given to venues with > 100 person capacity',
                 placeholder: '150',
                 value: host.capacity
               }, update)}
@@ -161,6 +171,7 @@ module.exports = function (state, prev, send) {
   function update (key, value) {
     send('updateHost', {key: key, value: value})
   }
+
 }
 
 // - the capacity for at least 100 attendees

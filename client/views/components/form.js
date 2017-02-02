@@ -1,6 +1,12 @@
 const map = require('lodash/map')
 const html = require('choo/html')
 const dateable = require('dateable')
+const css = require('sheetify')
+const prefix = css`
+  :host .confirmation {
+    color: green;
+  }
+`
 
 module.exports = {
   textField: textField,
@@ -15,6 +21,8 @@ function textField (opts, cb) {
       <label class="db fw4 lh-copy f6" for="${opts.key}">
         ${opts.label}
       </label>
+
+      <em>${opts.note}</em>
 
       <input
         class="pa2 input-reset ba bg-transparent w-100 measure"
@@ -101,6 +109,18 @@ function submitButton (opts, cb) {
     text = 'Fill out the form to continue...'
   } else {
     style += ` ${colors} grow pointer`
+  }
+
+  if (opts.key === 'submitState' && opts.value === 'done') {
+    text += ' A notifcation has been sent to the js.la team and someone will get back to you shortly.'
+
+    var confirmClass = `mt3 ${prefix}`
+
+    return html`
+      <div class=${confirmClass}>
+        <h4 class="confirmation">${text}</h4>
+      </div>
+    `
   }
 
   return html`
