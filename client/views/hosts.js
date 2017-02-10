@@ -79,6 +79,13 @@ module.exports = function (state, prev, send) {
               }, update)}
 
               ${textField({
+                key: 'address',
+                label: 'What\'s your address?',
+                placeholder: '123 Main St. Los Angeles, CA 90027',
+                value: host.address
+              }, update)}
+
+              ${textField({
                 key: 'email',
                 label: 'How can we get in touch with you?',
                 placeholder: 'webmaster@stockmarketbusiness.co',
@@ -97,6 +104,13 @@ module.exports = function (state, prev, send) {
                 label: 'How many attendees could you host?',
                 placeholder: '150',
                 value: host.capacity
+              }, update)}
+
+              ${textField({
+                key: 'parking',
+                label: 'How/where should attendees park?',
+                placeholder: 'In our parking lot or nearby street parking.',
+                value: host.parking
               }, update)}
 
               ${textField({
@@ -173,6 +187,8 @@ function isValid (host) {
   if (!host.name) return false
   if (!host.organization) return false
   if (!host.email) return false
+  if (!host.address) return false
+  if (!host.parking) return false
   if (!host.goal) return false
   if (!host.capacity) return false
   if (!host.logo) return false
