@@ -177,12 +177,6 @@ module.exports = function (state, prev, send) {
   }
 }
 
-// - the capacity for at least 100 attendees
-// - food and drink (this can just be 🍕 and 🍺 it's up to y'all)
-// - a PA or some type of quality sound system we can project speakers voice
-// - projector and screen
-// - some type of table/podium for the speaker to present from
-
 function isValid (host) {
   if (!host.name) return false
   if (!host.organization) return false
