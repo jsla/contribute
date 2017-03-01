@@ -81,6 +81,13 @@ module.exports = function (state, prev, send) {
                 value: speaker.email
               }, update)}
 
+              ${textField({
+                key: 'slack',
+                label: 'What\'s your usual Slack handle?',
+                placeholder: '@slackFace',
+                value: speaker.slack
+              }, update)}
+
               ${textArea({
                 key: 'abstract',
                 label: 'What would you like to talk about?',
