@@ -83,7 +83,11 @@ module.exports = function (state, prev, send) {
 
               ${textField({
                 key: 'slack',
-                label: 'What\'s your usual Slack handle?',
+                label: html`
+                  <span>
+                    What\'s your js.la slack handle? Not a member? <a href="https://jsla-slackin.herokuapp.com/" style="text-decoration: none;">Join Here!</a>
+                  </span>
+                `,
                 placeholder: '@slackFace',
                 value: speaker.slack
               }, update)}
