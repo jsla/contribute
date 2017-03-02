@@ -81,6 +81,17 @@ module.exports = function (state, prev, send) {
                 value: speaker.email
               }, update)}
 
+              ${textField({
+                key: 'slack',
+                label: html`
+                  <span>
+                    What\'s your js.la slack handle? Not a member? <a href="https://jsla-slackin.herokuapp.com/" style="text-decoration: none;">Join Here!</a>
+                  </span>
+                `,
+                placeholder: '@slackFace',
+                value: speaker.slack
+              }, update)}
+
               ${textArea({
                 key: 'abstract',
                 label: 'What would you like to talk about?',
