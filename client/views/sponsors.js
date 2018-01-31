@@ -3,6 +3,7 @@ const dates = require('../dates')
 const map = require('lodash/map')
 
 const formComponents = require('./components/form')
+const preview = require('./components/sponsor-preview')
 const textField = formComponents.textField
 const textArea = formComponents.textArea
 const dateSelect = formComponents.dateSelect
@@ -105,10 +106,13 @@ module.exports = function (state, prev, send) {
 
                 ${textField({
                   key: 'logo',
-                  label: 'What hi-res logo should we use for our site and promotion?',
+                  label: 'What hi-res logo (275 x 100) should we use for our site and promotion?',
+                  info: 'Stuff',
                   placeholder: 'http://stockmarketbusiness.co/path/logo.png',
                   value: sponsor.logo
                 }, update)}
+
+                ${sponsor.logo ? preview({ url: sponsor.logo }) : ''}
 
                 ${textField({
                   key: 'link',
