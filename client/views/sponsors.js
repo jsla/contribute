@@ -107,7 +107,6 @@ module.exports = function (state, prev, send) {
                 ${textField({
                   key: 'logo',
                   label: 'What hi-res logo (275 x 100) should we use for our site and promotion?',
-                  info: 'Stuff',
                   placeholder: 'http://stockmarketbusiness.co/path/logo.png',
                   value: sponsor.logo
                 }, update)}
