@@ -5,8 +5,8 @@ module.exports = {
     return state
   },
 
-  setSpeakerProperty: function (change, state) {
-    state.speaker.submitDate =  new Date().toUTCString()
+  setSpeakerProperty: function (change, state, submitDate) {
+    submitDate =  new Date().toUTCString()
     state.speaker[change.key] = change.value
     console.log(state.speaker);
 

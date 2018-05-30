@@ -5,8 +5,9 @@ const state = {
   speaker: {},
   sponsor: {},
   host: {},
-  submitDate: {},
 }
+
+const submitDate = ''
 
 module.exports = {
   state: state,
