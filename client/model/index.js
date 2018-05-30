@@ -4,11 +4,13 @@ const reducers = require('./reducers')
 const state = {
   speaker: {},
   sponsor: {},
-  host: {}
+  host: {},
+  submitDate: {},
 }
 
 module.exports = {
   state: state,
   effects: effects,
-  reducers: reducers
+  reducers: reducers,
+  submitDate: submitDate,
 }

@@ -82,6 +82,13 @@ module.exports = function (state, prev, send) {
               }, update)}
 
               ${textField({
+                key: 'number',
+                label: 'Mind adding a number for day of coordination?',
+                placeholder: '123-456-7890',
+                value: speaker.number
+              }, update)}
+
+              ${textField({
                 key: 'slack',
                 label: html`
                   <span>
