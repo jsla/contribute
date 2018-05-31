@@ -153,6 +153,7 @@ module.exports = function (state, prev, send) {
 
   function update (key, value) {
     send('updateSpeaker', {key: key, value: value})
+    send('updateSpeaker', {key: 'submitDate', value: new Date().toUTCString().slice(0, 16)})
   }
 }
 
