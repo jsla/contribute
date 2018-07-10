@@ -97,7 +97,7 @@ module.exports = function (state, prev, send) {
                 key: 'slack',
                 label: html`
                   <span>
-                    What\'s your js.la slack handle? Not a member? <a href="https://jsla-slackin.herokuapp.com/" style="text-decoration: none;">Join Here!</a>
+                    What\'s your js.la slack handle? Not a member? <a href="https://join-jsla-slack.herokuapp.com/" style="text-decoration: none;">Join Here!</a>
                   </span>
                 `,
                 placeholder: '@slackFace',
