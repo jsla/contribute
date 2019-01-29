@@ -6,6 +6,7 @@ const formComponents = require('./components/form')
 const preview = require('./components/sponsor-preview')
 const textField = formComponents.textField
 const textArea = formComponents.textArea
+const imageUpload = formComponents.imageUpload
 const dateSelect = formComponents.dateSelect
 const submitButton = formComponents.submitButton
 
@@ -125,11 +126,9 @@ module.exports = function (state, prev, send) {
                 value: host.parking
               }, update)}
 
-              ${textField({
+              ${imageUpload({
                 key: 'logo',
-                label: 'What hi-res logo (550 x 200) should we use for our site and promotion?',
-                placeholder: 'http://stockmarketbusiness.co/path/logo.png',
-                value: host.logo
+                label: 'What hi-res logo (550 x 200) should we use for our site and promotion?'
               }, update)}
 
               ${host.logo ? preview({ url: host.logo }) : ''}

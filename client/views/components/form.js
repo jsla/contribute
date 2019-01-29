@@ -1,10 +1,12 @@
 const map = require('lodash/map')
 const html = require('choo/html')
 const dateable = require('dateable')
+const { updateImage } = require('../../util')
 
 module.exports = {
   textField: textField,
   textArea: textArea,
+  imageUpload: imageUpload,
   dateSelect: dateSelect,
   submitButton: submitButton
 }
@@ -44,6 +46,25 @@ function textArea (opts, cb) {
   `
 
   function onchange (evt) { cb(opts.key, evt.target.value) }
+}
+
+function imageUpload (opts, cb) {
+  return html`
+    <div class="mt3">
+      <label class="db fw4 lh-copy f6" for="${opts.key}">
+        ${opts.label}
+      </label>
+      <input
+        id="selectedFile" style="display: none;"
+        type="file"
+        name="${opts.key}"
+        onchange=${onchange}>
+        <br>
+        <div><label class="pa2 input-reset ba bg-transparent w-100 h5 measure" for="selectedFile" class="btn btn-large">Select file</label></div>
+    </div>
+  `
+
+  function onchange (evt) { updateImage(opts.key, evt.path[0].files[0], cb) }
 }
 
 function dateSelect (opts, cb) {
