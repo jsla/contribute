@@ -5,6 +5,7 @@ const map = require('lodash/map')
 const formComponents = require('./components/form')
 const textField = formComponents.textField
 const textArea = formComponents.textArea
+const imageUpload = formComponents.imageUpload
 const dateSelect = formComponents.dateSelect
 const submitButton = formComponents.submitButton
 
@@ -106,12 +107,12 @@ module.exports = function (state, prev, send) {
                 value: speaker.title
               }, update)}
 
-              ${textField({
+              ${imageUpload({
                 key: 'avatar',
-                label: 'What avatar image of you should we use to promote your talk?',
-                placeholder: 'http://twitfacehub.com/path/avatar.jpg',
-                value: speaker.avatar
+                label: 'What avatar image of you should we use to promote your talk?'
               }, update)}
+
+              ${speaker.avatar ? html`<img src="${speaker.avatar}" height="150">` : ''}
 
               ${textField({
                 key: 'github',
