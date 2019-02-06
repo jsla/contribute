@@ -134,6 +134,13 @@ module.exports = function (state, prev, send) {
                 selected: speaker.dates
               }, update)}
 
+              ${textArea({
+                key: 'intro',
+                label: 'How would you like to be introduced?',
+                placeholder: 'I would like to be introduced...',
+                value: speaker.intro
+              }, update)}
+              
             </fieldset>
 
             ${submitButton({
