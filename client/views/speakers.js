@@ -112,7 +112,7 @@ module.exports = function (state, prev, send) {
                 label: 'What avatar image of you should we use to promote your talk?'
               }, update)}
 
-              ${speaker.avatar ? html`<img src="${speaker.avatar}" height="150">` : ''}
+              ${speaker.avatar ? html`<img src="${speaker.avatar}" style="max-width: 300px; margin-top: 20px; max-height: 200px;">` : ''}
 
               ${textField({
                 key: 'github',
