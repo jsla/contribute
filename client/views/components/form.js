@@ -64,7 +64,10 @@ function imageUpload (opts, cb) {
     </div>
   `
 
-  function onchange (evt) { updateImage(opts.key, evt.path[0].files[0], cb) }
+  function onchange (evt) {
+    var path = evt.path || (evt.composedPath && evt.composedPath())
+    updateImage(opts.key, path[0].files[0], cb)
+  }
 }
 
 function dateSelect (opts, cb) {
