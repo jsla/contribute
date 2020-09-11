@@ -1,6 +1,6 @@
 const map = require('lodash/map')
 const html = require('choo/html')
-const dateable = require('dateable')
+const moment = require('moment')
 const { updateImage } = require('../../util')
 
 module.exports = {
@@ -90,7 +90,7 @@ function dateSelect (opts, cb) {
                 class='mr1'
                 checked="${isChecked(date)}"
                 onchange=${(e) => toggle(date)} />
-              ${dateable(createDate(date), 'dddd, MMMM D')}
+              ${moment(createDate(date)).format('dddd, MMMM D')}
             </label>
           </div>
         `

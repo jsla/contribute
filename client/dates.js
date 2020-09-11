@@ -14,13 +14,13 @@ function getDates (n) {
   while (dates.length < n) {
     d = incrementDate(d)
 
-    thisMonth = d.getMonth()
+    thisMonth = d.getUTCMonth()
     var isValidMonth = invalidMonths.indexOf(lastMonth) === -1
     var isNewMonth = thisMonth !== lastMonth
 
     if (lastThurs && isValidMonth && isNewMonth) { dates.push(lastThurs) }
 
-    if (d.getDay() === 4) lastThurs = d
+    if (d.getUTCDay() === 4) lastThurs = d
     lastMonth = thisMonth
   }
 
@@ -36,9 +36,9 @@ function incrementDate (d) {
 }
 
 function resetDate (d) {
-  d.setHours(0)
-  d.setMinutes(0)
-  d.setSeconds(0)
-  d.setMilliseconds(0)
+  d.setUTCHours(1)
+  d.setUTCMinutes(0)
+  d.setUTCSeconds(0)
+  d.setUTCMilliseconds(0)
   return d
 }
