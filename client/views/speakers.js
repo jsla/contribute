@@ -95,7 +95,7 @@ module.exports = function (state, prev, send) {
 
               ${textArea({
                 key: 'abstract',
-                label: 'What would you like to talk about?',
+                label: 'What would you like to talk about? This will appear on our website and on YouTube.',
                 placeholder: 'This all started when I needed to...',
                 value: speaker.abstract
               }, update)}
@@ -141,14 +141,14 @@ module.exports = function (state, prev, send) {
                 placeholder: 'I would like to be introduced...',
                 value: speaker.intro
               }, update)}
-              
+
             </fieldset>
 
             ${submitButton({
               key: 'submitState',
               disabled: !isValid(speaker),
               undefined: "Let's do this.",
-              done: 'All set!',
+              done: 'All set! Your submission has been received!',
               error: 'Uh oh...',
               value: speaker.submitState
             }, update)}
