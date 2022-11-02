@@ -27,7 +27,7 @@
   "devDependencies": {
     "budo": "^9.2.1",
     "standard": "^8.5.0",
-    "surge": "^0.18.0",
+    "surge": "^0.23.1",
     "uglify-es": "^3.1.5"
   }
 }
